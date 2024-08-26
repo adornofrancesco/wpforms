@@ -1,0 +1,26 @@
+function wpf_dev_register_home_url_smarttag( $tags ) {
+ 
+    // Aggiungiamo il nuovo smart tag chiamato 'home_url'
+    $tags['home_url'] = 'URL Homepage';
+ 
+    return $tags;
+}
+add_filter( 'wpforms_smart_tags', 'wpf_dev_register_home_url_smarttag', 10, 1 );
+
+
+function wpf_dev_process_home_url_smarttag( $content, $tag ) {
+ 
+    // Verifichiamo che il tag sia il nostro 'home_url'
+    if ( 'home_url' === $tag ) {
+ 
+        // Otteniamo l'URL della homepage del sito
+        $homepage_url = get_home_url();
+ 
+        // Sostituiamo il tag con l'URL della homepage
+        $content = str_replace( '{home_url}', $homepage_url, $content );
+ 
+    }
+ 
+    return $content;
+}
+add_filter( 'wpforms_smart_tag_process', 'wpf_dev_process_home_url_smarttag', 10, 2 );
